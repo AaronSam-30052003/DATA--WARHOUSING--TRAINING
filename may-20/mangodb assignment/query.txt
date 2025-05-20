@@ -1,0 +1,33 @@
+1. Switch to a new database called facultydb
+use facultydb
+
+2. Create a collection named professors and insert the following 3 professors:
+db.professors.insertMany([
+  {name: "aaron sam",subject: "Mathematics",experience: 10,active: true},
+  {name: "sobana",subject: "Physics",experience: 5,active: false},
+  {name: "dudububu",subject: "Chemistry",experience: 8,active: true}
+])
+
+3.Find all professors in the professors collection
+db.professors.find()
+
+4.Find only the professors who are active
+db.professors.find({ active: true })
+
+5.Update the experience of the "Physics" professor to 6 years
+db.professors.updateOne(
+  { subject: "Physics" },
+  { $set: { experience: 6 } }
+)
+
+6. Mark the "Physics" professor as active
+db.professors.updateOne(
+  { subject: "Physics" },
+  { $set: { active: true } }
+)
+
+7.Delete the professor who teaches "Chemistry"
+db.professors.deleteOne({ subject: "Chemistry" })
+
+
+
