@@ -14,7 +14,7 @@ bugtracker> db.bugs.insertMany([
 ... status:"open",
 ... priority:"high",
 ... createdAt:"21-05-2025"},
-... {title:"app performance is slow",
+... {title:"Crash on logout",
 ... reportedBy:"dudububu",
 ... status:"closed",
 ... priority:"medium",
