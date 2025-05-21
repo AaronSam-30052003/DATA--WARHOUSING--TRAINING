@@ -1,0 +1,18 @@
+[{
+  "_id": {
+    "$oid": "682dec8aa63a24ff086c4bd0"
+  },
+  "name": "Aaron sam",
+  "enrolledCourse": {
+    "$oid": "000000000000000000000101"
+  }
+},
+{
+  "_id": {
+    "$oid": "682dec8aa63a24ff086c4bd1"
+  },
+  "name": "sobana",
+  "enrolledCourse": {
+    "$oid": "000000000000000000000102"
+  }
+}]
