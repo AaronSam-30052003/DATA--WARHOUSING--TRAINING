@@ -1,0 +1,27 @@
+[{
+  "_id": {
+    "$oid": "682ea9623e5cf145216c4bd0"
+  },
+  "name": "Aaron",
+  "email": "aaron@gmail.com",
+  "role": "Admin",
+  "active": true
+},
+{
+  "_id": {
+    "$oid": "682ea9623e5cf145216c4bd1"
+  },
+  "name": "sobana",
+  "email": "sobana@gmail.com",
+  "role": "Teamlead",
+  "active": true
+},
+{
+  "_id": {
+    "$oid": "682ea9623e5cf145216c4bd2"
+  },
+  "name": "Mickey",
+  "email": "mickey@gmail.com",
+  "role": "Manager",
+  "active": false
+}]

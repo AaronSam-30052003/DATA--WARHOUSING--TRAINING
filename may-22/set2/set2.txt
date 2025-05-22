@@ -1,0 +1,419 @@
+MongoDB Exercise Set #2: Project & Task Tracker
+
+Section 1: Basic Document Modeling
+
+1.Create a database called taskmanager
+use taskmanager
+
+2.Insert 3 users into a users collection. Each should have:
+name (string)
+email (string)
+role (either "admin" , "manager" , or "developer" )
+active (boolean)
+
+taskmanager> const userIds=db.users.insertMany([
+... {
+... name:"Aaron",
+... email:"aaron@gmail.com",
+... role:"Admin",
+... active:true
+... },
+... {
+... name:"sobana",
+... email:"sobana@gmail.com",
+... role:"Developer",
+... active:true
+... },
+... {
+... name:"Mickey",
+... email:"mickey@gmail.com",
+... role:"Manager",
+... active:false
+... }
+... ])
+
+3.Insert 2 projects into a projects collection:
+title , description , startDate , status (e.g. "active" , "completed" )
+Embed a createdBy sub-document containing the user’s _id , name
+
+... {
+... title:"hotel website",
+... description:"hotel website for Aaso company",
+... startdate:new Date(),
+... status:"active",
+... createdby:{_id:userIds[0],name:"Aaron"}
+... },
+... {
+... title:"mobile app",
+... description:"mobile app for cancer patients",
+... startdate:new Date("2025-05-22"),
+... status:"completed",
+... createdby:{_id:userIds[1],name:"sobana"}
+... }
+... ]).insertedIds
+
+4.Insert 5 tasks into a tasks collection:
+Fields: title , assignedTo (user _id ), projectId , priority , dueDate ,
+status
+
+taskmanager> db.tasks.insertMany([
+... {
+... title:"hompage design",
+... assignedto:userIds[1],
+... projectId:projectIds[0],
+... priority:"high",
+... duedate:new Date("2025-06-04"),
+... status:"open"
+... },
+... {
+... title:"API integration",
+... assignedto:userIds[0],
+... projectId:projectIds[1],
+... priority:"medium",
+... duedate:new Date("2025-06-16"),
+... status:"In progress"
+... },
+... {
+... title:"development",
+... assignedto:userIds[2],
+... projectId:projectIds[0],
+... priority:"high",
+... duedate:new Date("2025-06-26"),
+... status:"pending"
+... },
+... {
+... title:"testing",
+... assignedto:userIds[1],
+... projectId:projectIds[1],
+... priority:"high",
+... duedate:new Date("2025-07-01"),
+... status:"pending"
+... },
+... {
+... title:"deployment",
+... assignedto:userIds[0],
+... projectId:projectIds[0],
+... priority:"medium",
+... duedate:new Date("2025-07-15"),
+... status:"open"
+... }
+... ])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('682ead143e5cf145216c4bd5'),
+    '1': ObjectId('682ead143e5cf145216c4bd6'),
+    '2': ObjectId('682ead143e5cf145216c4bd7'),
+    '3': ObjectId('682ead143e5cf145216c4bd8'),
+    '4': ObjectId('682ead143e5cf145216c4bd9')
+  }
+}
+
+Section 2: Filtering & Querying
+
+5.Find all tasks with priority "high" that are not completed
+taskmanager> db.tasks.find(
+... {
+... priority:"high",
+... status:{$ne:"completed"}
+... })
+[
+  {
+    _id: ObjectId('682ead143e5cf145216c4bd5'),
+    title: 'hompage design',
+    assignedto: null,
+    projectId: ObjectId('682eaa6f3e5cf145216c4bd3'),
+    priority: 'high',
+    duedate: ISODate('2025-06-04T00:00:00.000Z'),
+    status: 'open'
+  },
+  {
+    _id: ObjectId('682ead143e5cf145216c4bd7'),
+    title: 'development',
+    assignedto: null,
+    projectId: ObjectId('682eaa6f3e5cf145216c4bd3'),
+    priority: 'high',
+    duedate: ISODate('2025-06-26T00:00:00.000Z'),
+    status: 'pending'
+  },
+  {
+    _id: ObjectId('682ead143e5cf145216c4bd8'),
+    title: 'testing',
+    assignedto: null,
+    projectId: ObjectId('682eaa6f3e5cf145216c4bd4'),
+    priority: 'high',
+    duedate: ISODate('2025-07-01T00:00:00.000Z'),
+    status: 'pending'
+  }
+]
+
+6.Query all active users with role "developer"
+taskmanager> db.users.find(
+... {
+... role:"Developer",
+... active:true
+... })
+[
+  {
+    _id: ObjectId('682ea9623e5cf145216c4bd1'),
+    name: 'sobana',
+    email: 'sobana@gmail.com',
+    role: 'Developer',
+    active: true
+  }
+]
+
+7.Find all tasks assigned to a specific user (by ObjectId )
+taskmanager> db.tasks.find(
+... {assignedto:userIds[1]}
+... )
+[
+  {
+    _id: ObjectId('682ea9623e5cf145216c4bd1'),
+    name: 'sobana',
+    email: 'sobana@gmail.com',
+    role: 'Developer',
+    active: true
+  }
+]
+
+8.Find all projects started in the last 30 days
+taskmanager> db.projects.find(
+... {
+... startdate:{$gt:new Date(Date.now()-30*24*60*60*1000)}
+... })
+[
+  {
+    _id: ObjectId('682eaa6f3e5cf145216c4bd3'),
+    title: 'hotel website',
+    description: 'hotel website for Aaso company',
+    startdate: ISODate('2025-05-22T04:39:11.591Z'),
+    status: 'active',
+    createdby: { _id: null, name: 'Aaron' }
+  },
+  {
+    _id: ObjectId('682eaa6f3e5cf145216c4bd4'),
+    title: 'mobile app',
+    description: 'mobile app for cancer patients',
+    startdate: ISODate('2025-05-22T00:00:00.000Z'),
+    status: 'completed',
+    createdby: { _id: null, name: 'sobana' }
+  }
+]
+
+Section 3: Update Operations
+
+9.taskmanager> db.tasks.updateOne(
+... {title:"testing"},
+... {$set:{status:"completed"}
+... })
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+10.Add a new role field called "teamLead" to one of the users
+taskmanager> db.users.updateOne(
+... {
+... name:"sobana"},
+... {$set:{role:"Teamlead"}
+... })
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+11.Add a new tag array to a task: ["urgent", "frontend"]
+taskmanager> db.tasks.updateOne(
+... {title:"API integration"},
+... {$set:{tags:["urgent","frontend"]}
+... })
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+Section 4: Array and Subdocument Operations
+
+12.Add a new tag "UI" to the task’s tags array using $addToSet
+taskmanager> db.tasks.updateOne(
+... {title:"deployment"},
+... {$set:{tags:"UI"}
+... })
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+13.Remove "frontend" from a task’s tag list
+taskmanager> db.tasks.updateOne(
+... {title:"API integration"},
+... {$pull:{tags:"frontend"}}
+... )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+14.Use $inc to increment a project ’s progress field by 10
+taskmanager> db.projects.updateOne(
+... {title:"hotel website"},
+... {$inc:{progress:10}}
+... )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+Section 5: Aggregation & Lookup
+
+15.Use $lookup to join tasks with users and show task title + assignee name
+taskmanager> db.tasks.aggregate([
+... {
+... $lookup:{
+... from:"users",
+... localField:"assignedto",
+... foreignField:"_id",
+... as:"assignee"
+... }
+... },
+... {$unwind:"$assignee"},
+... {$project:{title:1,assignee:"$assignee.name"}}
+... ])
+
+16.Use $lookup to join tasks with projects , and filter tasks where project
+status = active
+taskmanager> db.tasks.aggregate([
+... {
+... $lookup:{
+... from:"projects",
+... localField:"projectId",
+... foreignField:"_id",
+... as:"project"}
+... },
+... {$unwind:"$project"},
+... {$match:{"project.status":"active"}}
+... ])
+[
+  {
+    _id: ObjectId('682ead143e5cf145216c4bd5'),
+    title: 'hompage design',
+    assignedto: null,
+    projectId: ObjectId('682eaa6f3e5cf145216c4bd3'),
+    priority: 'high',
+    duedate: ISODate('2025-06-04T00:00:00.000Z'),
+    status: 'open',
+    project: {
+      _id: ObjectId('682eaa6f3e5cf145216c4bd3'),
+      title: 'hotel website',
+      description: 'hotel website for Aaso company',
+      startdate: ISODate('2025-05-22T04:39:11.591Z'),
+      status: 'active',
+      createdby: { _id: null, name: 'Aaron' },
+      progress: 10
+    }
+  },
+  {
+    _id: ObjectId('682ead143e5cf145216c4bd7'),
+    title: 'development',
+    assignedto: null,
+    projectId: ObjectId('682eaa6f3e5cf145216c4bd3'),
+    priority: 'high',
+    duedate: ISODate('2025-06-26T00:00:00.000Z'),
+    status: 'pending',
+    project: {
+      _id: ObjectId('682eaa6f3e5cf145216c4bd3'),
+      title: 'hotel website',
+      description: 'hotel website for Aaso company',
+      startdate: ISODate('2025-05-22T04:39:11.591Z'),
+      status: 'active',
+      createdby: { _id: null, name: 'Aaron' },
+      progress: 10
+    }
+  },
+  {
+    _id: ObjectId('682ead143e5cf145216c4bd9'),
+    title: 'deployment',
+    assignedto: null,
+    projectId: ObjectId('682eaa6f3e5cf145216c4bd3'),
+    priority: 'medium',
+    duedate: ISODate('2025-07-15T00:00:00.000Z'),
+    status: 'open',
+    tags: 'UI',
+    project: {
+      _id: ObjectId('682eaa6f3e5cf145216c4bd3'),
+      title: 'hotel website',
+      description: 'hotel website for Aaso company',
+      startdate: ISODate('2025-05-22T04:39:11.591Z'),
+      status: 'active',
+      createdby: { _id: null, name: 'Aaron' },
+      progress: 10
+    }
+  }
+]
+
+17.Use $group to get count of tasks per status
+taskmanager> db.tasks.aggregate([
+... {$group:{_id:"$status",count:{$sum:1}}}
+... ])
+[
+  { _id: 'open', count: 2 },
+  { _id: 'In progress', count: 1 },
+  { _id: 'completed', count: 1 },
+  { _id: 'pending', count: 1 }
+]
+
+18.Use $match , $sort , and $limit to get top 3 soonest due tasks
+taskmanager> db.tasks.aggregate([
+... {$match:{}},
+... {$sort:{duedate:1}},
+... {$limit:3}
+... ])
+[
+  {
+    _id: ObjectId('682ead143e5cf145216c4bd5'),
+    title: 'hompage design',
+    assignedto: null,
+    projectId: ObjectId('682eaa6f3e5cf145216c4bd3'),
+    priority: 'high',
+    duedate: ISODate('2025-06-04T00:00:00.000Z'),
+    status: 'open'
+  },
+  {
+    _id: ObjectId('682ead143e5cf145216c4bd6'),
+    title: 'API integration',
+    assignedto: null,
+    projectId: ObjectId('682eaa6f3e5cf145216c4bd4'),
+    priority: 'medium',
+    duedate: ISODate('2025-06-16T00:00:00.000Z'),
+    status: 'In progress',
+    tags: [ 'urgent' ]
+  },
+  {
+    _id: ObjectId('682ead143e5cf145216c4bd7'),
+    title: 'development',
+    assignedto: null,
+    projectId: ObjectId('682eaa6f3e5cf145216c4bd3'),
+    priority: 'high',
+    duedate: ISODate('2025-06-26T00:00:00.000Z'),
+    status: 'pending'
+  }
+]
