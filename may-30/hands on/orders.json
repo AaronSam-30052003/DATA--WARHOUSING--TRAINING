@@ -1,0 +1,6 @@
+{"OrderID":101,"CustomerID":1,"CustomerName":"Ali","OrderDate":"2023-07-01","Status":"Delivered","TotalAmount":500,"Month":7,"City":"Madurai"}
+{"OrderID":102,"CustomerID":2,"CustomerName":"Neha","OrderDate":"2023-07-05","Status":"Cancelled","TotalAmount":300,"Month":7,"City":"Kerala"}
+{"OrderID":103,"CustomerID":1,"CustomerName":"Ali","OrderDate":"2023-08-01","Status":"Delivered","TotalAmount":700,"Month":8,"City":"Madurai"}
+{"OrderID":104,"CustomerID":3,"CustomerName":"Ravi","OrderDate":"2023-08-10","Status":"Returned","TotalAmount":150,"Month":8,"City":"Bangalore"}
+{"OrderID":105,"CustomerID":4,"CustomerName":"Sara","OrderDate":"2023-09-15","Status":"Delivered","TotalAmount":400,"Month":9,"City":"Hyderabad"}
+{"OrderID":106,"CustomerID":2,"CustomerName":"Neha","OrderDate":"2023-09-18","Status":"Failed","TotalAmount":350,"Month":9,"City":"Kerala"}

@@ -1,0 +1,7 @@
+OrderID,CustomerID,CustomerName,OrderDate,Status,TotalAmount
+101,1,Ali,2023-07-01,Delivered,500
+102,2,Neha,2023-07-05,Cancelled,300
+103,1,Ali,2023-08-01,Delivered,700
+104,3,Ravi,2023-08-10,Returned,150
+105,4,Sara,2023-09-15,Delivered,400
+106,2,Neha,2023-09-18,Failed,350
