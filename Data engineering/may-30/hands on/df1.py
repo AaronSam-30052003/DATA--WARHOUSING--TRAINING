@@ -1,0 +1,12 @@
+import pandas as pd
+orders=pd.read_csv('orders.csv')
+customers=pd.read_csv('customers.csv')
+products=pd.read_csv('products.csv')
+result=pd.merge(orders,customers,how='inner',on='CustomerID')
+print(result)
+result=pd.merge(orders,customers,how='outer',on='CustomerID')
+print(result)
+result=pd.merge(orders,customers,how='right',on='CustomerID')
+print(result)
+result=pd.merge(orders,customers,how='left',on='CustomerID')
+print(result)

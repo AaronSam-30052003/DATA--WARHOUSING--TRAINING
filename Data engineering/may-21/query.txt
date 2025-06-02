@@ -1,0 +1,160 @@
+
+1. Use a new database called campusdb
+use campusdb
+2.b
+2 Create a collection enrollments and insert 4 student documents. Each
+document should include:
+name (string)
+studentId (number)
+courses (array of strings)
+address (sub-document with city , state )
+feesPaid (boolean)
+Ensure:
+At least 1 student is from "Delhi"
+At least 2 students are enrolled in "Python"
+At least 1 student has feesPaid:
+
+campusdb> db.enrollments.insertMany([
+... {name:"Ananya Verma",studentId:"101",courses:["python","java"],address:{city:"Delhi",state:"Delhi"},feesPaid:true},
+... {name:"Rohan Mehta",studentId:"102",courses:["python","AI"],address:{city:"Bangalore",state:"Karnataka"},fessPaid:fafalse},
+... {name:"Sneha Kapoor",studentId:"103",courses:[],address:{city:"Hyderabad",state:"Telangana"},feesPaid:true},
+... {name:"Imran Shaikh",studentId:"104",courses:["Data science","java"],address:{city:"Delhi",state:"Delhi"},feesPaid:fcampusdb>
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('682d50e969f91387a76c4bd0'),
+    '1': ObjectId('682d50e969f91387a76c4bd1'),
+    '2': ObjectId('682d50e969f91387a76c4bd2'),
+    '3': ObjectId('682d50e969f91387a76c4bd3')
+  }
+
+3.Display all student records
+campusdb> db.enrollments.find()
+[
+  {
+    _id: ObjectId('682d50e969f91387a76c4bd0'),
+    name: 'Ananya Verma',
+    studentId: '101',
+    courses: [ 'python', 'java' ],
+    address: { city: 'Delhi', state: 'Delhi' },
+    feesPaid: true
+  },
+  {
+    _id: ObjectId('682d50e969f91387a76c4bd1'),
+    name: 'Rohan Mehta',
+    studentId: '102',
+    courses: [ 'python', 'AI' ],
+    address: { city: 'Bangalore', state: 'Karnataka' },
+    fessPaid: false
+  },
+  {
+    _id: ObjectId('682d50e969f91387a76c4bd2'),
+    name: 'Sneha Kapoor',
+    studentId: '103',
+    courses: [],
+    address: { city: 'Hyderabad', state: 'Telangana' },
+    feesPaid: true
+  },
+  {
+    _id: ObjectId('682d50e969f91387a76c4bd3'),
+    name: 'Imran Shaikh',
+    studentId: '104',
+    courses: [ 'Data science', 'java' ],
+    address: { city: 'Delhi', state: 'Delhi' },
+    feesPaid: false
+  }
+]
+
+4. Find all students enrolled in "Python"
+campusdb> db.enrollments.find({courses:"python"})
+[
+  {
+    _id: ObjectId('682d50e969f91387a76c4bd0'),
+    name: 'Ananya Verma',
+    studentId: '101',
+    courses: [ 'python', 'java' ],
+    address: { city: 'Delhi', state: 'Delhi' },
+    feesPaid: true
+  },
+  {
+    _id: ObjectId('682d50e969f91387a76c4bd1'),
+    name: 'Rohan Mehta',
+    studentId: '102',
+    courses: [ 'python', 'AI' ],
+    address: { city: 'Bangalore', state: 'Karnataka' },
+    fessPaid: false
+  }
+]
+
+5.Find students from Delhi who have not paid fees
+campusdb> db.enrollments.find({"address.city":"Delhi",feesPaid:false})
+[
+  {
+    _id: ObjectId('682d50e969f91387a76c4bd3'),
+    name: 'Imran Shaikh',
+    studentId: '104',
+    courses: [ 'Data science', 'java' ],
+    address: { city: 'Delhi', state: 'Delhi' },
+    feesPaid: false
+  }
+]
+
+6. Add "AI Fundamentals" course to a specific student 
+campusdb> db.enrollments.updateOne(
+... {studentId:"101"},
+... {$addToSet:{courses:"AI Fundamentals"}}
+... )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+
+7.Update the city of a specific student to "mumbai"
+campusdb> db.enrollements.updateOne(
+... {studentId:"103"},
+... {$set:{"address.city":"Mumbai"}}
+... )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+
+8. Set feesPaid to true for all students from Delhi
+campusdb> db.enrollments.updateMany(
+... {"address.city":"Delhi"},
+... {$set:{feesPaid:true}}
+... )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 2,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+9.Remove "Java" course from any student who has it
+campusdb> db.enrollements.updateMany(
+... {courses:"java"},
+... {$pull:{courses:"java"}}
+... )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+
+10.Delete all students with no courses
+campusdb> db.enrollments.deleteMany({courses:{$eq:[]}})
+{ acknowledged: true, deletedCount: 1 }
+
+0r
+db.enrollments.deleteMany({ courses: { $size: 0 } }) //alternative method

@@ -1,0 +1,27 @@
+[{
+  "_id": {
+    "$oid": "682c5b5b3bbc1075876c4bd0"
+  },
+  "name": "aaron sam",
+  "subject": "Mathematics",
+  "experience": "10",
+  "active": true
+},
+{
+  "_id": {
+    "$oid": "682c5b5b3bbc1075876c4bd1"
+  },
+  "name": "sobana",
+  "subject": "Physics",
+  "experience": "6",
+  "active": true
+},
+{
+  "_id": {
+    "$oid": "682c5b5b3bbc1075876c4bd2"
+  },
+  "name": "dudububu",
+  "subject": "Chemistry",
+  "experience": "8",
+  "active": true
+}]

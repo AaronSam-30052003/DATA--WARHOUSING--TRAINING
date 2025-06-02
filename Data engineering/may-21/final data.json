@@ -1,0 +1,49 @@
+[{
+  "_id": {
+    "$oid": "682d50e969f91387a76c4bd0"
+  },
+  "name": "Ananya Verma",
+  "studentId": "101",
+  "courses": [
+    "python",
+    "java",
+    "AI Fundamentals"
+  ],
+  "address": {
+    "city": "Delhi",
+    "state": "Delhi"
+  },
+  "feesPaid": true
+},
+{
+  "_id": {
+    "$oid": "682d50e969f91387a76c4bd1"
+  },
+  "name": "Rohan Mehta",
+  "studentId": "102",
+  "courses": [
+    "python",
+    "AI"
+  ],
+  "address": {
+    "city": "Bangalore",
+    "state": "Karnataka"
+  },
+  "fessPaid": false
+},
+{
+  "_id": {
+    "$oid": "682d50e969f91387a76c4bd3"
+  },
+  "name": "Imran Shaikh",
+  "studentId": "104",
+  "courses": [
+    "Data science",
+    "java"
+  ],
+  "address": {
+    "city": "Delhi",
+    "state": "Delhi"
+  },
+  "feesPaid": true
+}]
