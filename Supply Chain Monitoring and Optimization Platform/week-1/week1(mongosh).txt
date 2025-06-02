@@ -1,0 +1,77 @@
+USE DATABASE
+mongosh> use supply_chain
+switched to db supply_chain
+
+1)Store shipment logs in MongoDB
+supply_chain> db.shipments.insertMany([
+... {
+... shipment_id:"S101",
+... order_id:1,
+... status:"In Transit",
+... timestamp:new Date()
+... },
+... {
+... shipment_id:"S102",
+... order_id:2,
+... status:"Delivered",
+... timestamp:new Date()
+... },
+... {
+... shipment_id:"S103",
+... order_id:3,
+... status:"Delayed",
+... timestamp:new Date()
+... },
+... {
+... shipment_id:"S104",
+... order_id:4,
+... status:"Pending",
+... timestamp:new Date()
+... },
+... {
+... shipment_id:"S105",
+... order_id:5,
+... status:"Delivered",
+... timestamp:new Date()
+... },
+... {
+... shipment_id:"S106",
+... order_id:6,
+... status:"In Transit",
+... timestamp:new Date()
+... },
+... {
+... shipment_id:"S107",
+... order_id:7,
+... status:"Out for Delivery",
+... timestamp:new Date()
+... }
+... ]);
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('683d31d2f3ad30c59e6c4bd0'),
+    '1': ObjectId('683d31d2f3ad30c59e6c4bd1'),
+    '2': ObjectId('683d31d2f3ad30c59e6c4bd2'),
+    '3': ObjectId('683d31d2f3ad30c59e6c4bd3'),
+    '4': ObjectId('683d31d2f3ad30c59e6c4bd4'),
+    '5': ObjectId('683d31d2f3ad30c59e6c4bd5'),
+    '6': ObjectId('683d31d2f3ad30c59e6c4bd6')
+  }
+}
+
+2)Create indexes for e cient querying
+supply_chain> db.shipments.createIndex({order_id:1});
+order_id_1
+supply_chain> db.shipments.createIndex({order_id:2});
+order_id_2
+supply_chain> db.shipments.createIndex({order_id:3});
+order_id_3
+supply_chain> db.shipments.createIndex({order_id:4});
+order_id_4
+supply_chain> db.shipments.createIndex({order_id:5});
+order_id_5
+supply_chain> db.shipments.createIndex({order_id:6});
+order_id_6
+supply_chain> db.shipments.createIndex({order_id:7});
+order_id_7

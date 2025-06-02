@@ -1,0 +1,77 @@
+[{
+  "_id": {
+    "$oid": "683d31d2f3ad30c59e6c4bd0"
+  },
+  "shipment_id": "S101",
+  "order_id": 1,
+  "status": "In Transit",
+  "timestamp": {
+    "$date": "2025-06-02T05:08:34.005Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "683d31d2f3ad30c59e6c4bd1"
+  },
+  "shipment_id": "S102",
+  "order_id": 2,
+  "status": "Delivered",
+  "timestamp": {
+    "$date": "2025-06-02T05:08:34.005Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "683d31d2f3ad30c59e6c4bd2"
+  },
+  "shipment_id": "S103",
+  "order_id": 3,
+  "status": "Delayed",
+  "timestamp": {
+    "$date": "2025-06-02T05:08:34.005Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "683d31d2f3ad30c59e6c4bd3"
+  },
+  "shipment_id": "S104",
+  "order_id": 4,
+  "status": "Pending",
+  "timestamp": {
+    "$date": "2025-06-02T05:08:34.005Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "683d31d2f3ad30c59e6c4bd4"
+  },
+  "shipment_id": "S105",
+  "order_id": 5,
+  "status": "Delivered",
+  "timestamp": {
+    "$date": "2025-06-02T05:08:34.005Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "683d31d2f3ad30c59e6c4bd5"
+  },
+  "shipment_id": "S106",
+  "order_id": 6,
+  "status": "In Transit",
+  "timestamp": {
+    "$date": "2025-06-02T05:08:34.005Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "683d31d2f3ad30c59e6c4bd6"
+  },
+  "shipment_id": "S107",
+  "order_id": 7,
+  "status": "Out for Delivery",
+  "timestamp": {
+    "$date": "2025-06-02T05:08:34.005Z"
+  }
+}]
